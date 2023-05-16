@@ -1,0 +1,11 @@
+[15:05:15] This is prokka 1.14.6
+[15:05:15] Written by Torsten Seemann <torsten.seemann@gmail.com>
+[15:05:15] Homepage is https://github.com/tseemann/prokka
+[15:05:15] Local time is Thu Apr 13 15:05:15 2023
+[15:05:15] You are simonos
+[15:05:15] Operating system is linux
+[15:05:15] You have BioPerl 1.007001
+[15:05:15] System has 16 cores.
+[15:05:15] Will use maximum of 8 cores.
+[15:05:15] Annotating as >>> Bacteria <<<
+[15:05:15] Please supply a contig FASTA file on the command line.

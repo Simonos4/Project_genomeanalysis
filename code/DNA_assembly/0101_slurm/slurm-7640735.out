@@ -1,0 +1,207 @@
+canu/2.2 has the useGrid option default set to useGrid=false. This can be overriden by another configuration file or a command-line option.
+-- canu snapshot v2.2 +0 changes (r10279 af9c6e709ff2d6473cf966702c420b9eb42d9078)
+--
+-- CITATIONS
+--
+-- For 'standard' assemblies of PacBio or Nanopore reads:
+--   Koren S, Walenz BP, Berlin K, Miller JR, Phillippy AM.
+--   Canu: scalable and accurate long-read assembly via adaptive k-mer weighting and repeat separation.
+--   Genome Res. 2017 May;27(5):722-736.
+--   http://doi.org/10.1101/gr.215087.116
+-- 
+-- Read and contig alignments during correction and consensus use:
+--   Šošic M, Šikic M.
+--   Edlib: a C/C ++ library for fast, exact sequence alignment using edit distance.
+--   Bioinformatics. 2017 May 1;33(9):1394-1395.
+--   http://doi.org/10.1093/bioinformatics/btw753
+-- 
+-- Overlaps are generated using:
+--   Berlin K, et al.
+--   Assembling large genomes with single-molecule sequencing and locality-sensitive hashing.
+--   Nat Biotechnol. 2015 Jun;33(6):623-30.
+--   http://doi.org/10.1038/nbt.3238
+-- 
+--   Myers EW, et al.
+--   A Whole-Genome Assembly of Drosophila.
+--   Science. 2000 Mar 24;287(5461):2196-204.
+--   http://doi.org/10.1126/science.287.5461.2196
+-- 
+-- Corrected read consensus sequences are generated using an algorithm derived from FALCON-sense:
+--   Chin CS, et al.
+--   Phased diploid genome assembly with single-molecule real-time sequencing.
+--   Nat Methods. 2016 Dec;13(12):1050-1054.
+--   http://doi.org/10.1038/nmeth.4035
+-- 
+-- Contig consensus sequences are generated using an algorithm derived from pbdagcon:
+--   Chin CS, et al.
+--   Nonhybrid, finished microbial genome assemblies from long-read SMRT sequencing data.
+--   Nat Methods. 2013 Jun;10(6):563-9
+--   http://doi.org/10.1038/nmeth.2474
+-- 
+-- CONFIGURE CANU
+--
+-- Detected Java(TM) Runtime Environment '1.8.0_151' (from '/sw/comp/java/x86_64/sun_jdk1.8.0_151/bin/java') with -d64 support.
+-- Detected gnuplot version '4.6 patchlevel 2   ' (from 'gnuplot') and image format 'png'.
+--
+-- Detected 2 CPUs and 16000 gigabytes of memory on the local machine.
+--
+-- Detected Slurm with 'sinfo' binary in /usr/bin/sinfo.
+-- Detected Slurm with task IDs up to 1000 allowed.
+-- 
+-- Slurm support detected.  Resources available:
+--    174 hosts with  16 cores and  124 GB memory.
+--      1 host  with  80 cores and 3997 GB memory.
+--     13 hosts with  16 cores and  249 GB memory.
+--     17 hosts with  16 cores and  499 GB memory.
+--
+--                         (tag)Threads
+--                (tag)Memory         |
+--        (tag)             |         |  algorithm
+--        -------  ----------  --------  -----------------------------
+-- Grid:  meryl     12.000 GB    4 CPUs  (k-mer counting)
+-- Grid:  hap        8.000 GB    4 CPUs  (read-to-haplotype assignment)
+-- Grid:  cormhap    6.000 GB   16 CPUs  (overlap detection with mhap)
+-- Grid:  obtovl     4.000 GB    8 CPUs  (overlap detection)
+-- Grid:  utgovl     4.000 GB    8 CPUs  (overlap detection)
+-- Grid:  cor        -.--- GB    4 CPUs  (read correction)
+-- Grid:  ovb        4.000 GB    1 CPU   (overlap store bucketizer)
+-- Grid:  ovs        8.000 GB    1 CPU   (overlap store sorting)
+-- Grid:  red       16.000 GB    4 CPUs  (read error detection)
+-- Grid:  oea        8.000 GB    1 CPU   (overlap error adjustment)
+-- Grid:  bat       16.000 GB    4 CPUs  (contig construction with bogart)
+-- Grid:  cns        -.--- GB    4 CPUs  (consensus)
+--
+-- Found untrimmed raw PacBio CLR reads in the input files.
+--
+-- Generating assembly 'lferriphilum' in '/domus/h1/simonos/Genomeanalysis/analysis/assembly':
+--   genomeSize:
+--     2400000
+--
+--   Overlap Generation Limits:
+--     corOvlErrorRate 0.2400 ( 24.00%)
+--     obtOvlErrorRate 0.0450 (  4.50%)
+--     utgOvlErrorRate 0.0450 (  4.50%)
+--
+--   Overlap Processing Limits:
+--     corErrorRate    0.2500 ( 25.00%)
+--     obtErrorRate    0.0450 (  4.50%)
+--     utgErrorRate    0.0450 (  4.50%)
+--     cnsErrorRate    0.0750 (  7.50%)
+--
+--   Stages to run:
+--     correct raw reads.
+--     trim corrected reads.
+--     assemble corrected and trimmed reads.
+--
+--
+-- BEGIN CORRECTION
+----------------------------------------
+-- Starting command on Mon Apr 10 16:26:48 2023 with 10743.946 GB free disk space
+
+    cd .
+    ./lferriphilum.seqStore.sh \
+    > ./lferriphilum.seqStore.err 2>&1
+
+-- Finished on Mon Apr 10 16:27:06 2023 (18 seconds) with 10743.792 GB free disk space
+----------------------------------------
+--
+-- In sequence store './lferriphilum.seqStore':
+--   Found 31686 reads.
+--   Found 480025224 bases (200.01 times coverage).
+--    Histogram of raw reads:
+--    
+--    G=480025224                        sum of  ||               length     num
+--    NG         length     index       lengths  ||                range    seqs
+--    ----- ------------ --------- ------------  ||  ------------------- -------
+--    00010        39241      1067     48016904  ||       1000-2588         3200|---------------------------------------------------------------
+--    00020        34474      2375     96025111  ||       2589-4177         2161|-------------------------------------------
+--    00030        29928      3866    144028296  ||       4178-5766         1848|-------------------------------------
+--    00040        25552      5602    192028315  ||       5767-7355         1857|-------------------------------------
+--    00050        21766      7636    240014813  ||       7356-8944         1875|-------------------------------------
+--    00060        18428     10034    288019191  ||       8945-10533        1988|----------------------------------------
+--    00070        15309     12890    336022701  ||      10534-12122        2118|------------------------------------------
+--    00080        12348     16372    384030189  ||      12123-13711        1960|---------------------------------------
+--    00090         8831     20895    432023885  ||      13712-15300        1783|------------------------------------
+--    00100         1000     31685    480025224  ||      15301-16889        1535|-------------------------------
+--    001.000x               31686    480025224  ||      16890-18478        1372|----------------------------
+--                                               ||      18479-20067        1217|------------------------
+--                                               ||      20068-21656        1062|---------------------
+--                                               ||      21657-23245         908|------------------
+--                                               ||      23246-24834         850|-----------------
+--                                               ||      24835-26423         734|---------------
+--                                               ||      26424-28012         658|-------------
+--                                               ||      28013-29601         576|------------
+--                                               ||      29602-31190         542|-----------
+--                                               ||      31191-32779         507|----------
+--                                               ||      32780-34368         535|-----------
+--                                               ||      34369-35957         492|----------
+--                                               ||      35958-37546         428|---------
+--                                               ||      37547-39135         390|--------
+--                                               ||      39136-40724         243|-----
+--                                               ||      40725-42313         195|----
+--                                               ||      42314-43902         174|----
+--                                               ||      43903-45491         118|---
+--                                               ||      45492-47080          92|--
+--                                               ||      47081-48669          59|--
+--                                               ||      48670-50258          50|-
+--                                               ||      50259-51847          30|-
+--                                               ||      51848-53436          31|-
+--                                               ||      53437-55025          30|-
+--                                               ||      55026-56614          16|-
+--                                               ||      56615-58203          19|-
+--                                               ||      58204-59792           9|-
+--                                               ||      59793-61381          10|-
+--                                               ||      61382-62970           7|-
+--                                               ||      62971-64559           2|-
+--                                               ||      64560-66148           1|-
+--                                               ||      66149-67737           2|-
+--                                               ||      67738-69326           1|-
+--                                               ||      69327-70915           0|
+--                                               ||      70916-72504           0|
+--                                               ||      72505-74093           0|
+--                                               ||      74094-75682           0|
+--                                               ||      75683-77271           0|
+--                                               ||      77272-78860           0|
+--                                               ||      78861-80449           1|-
+--    
+----------------------------------------
+-- Starting command on Mon Apr 10 16:27:06 2023 with 10743.792 GB free disk space
+
+    cd correction/0-mercounts
+    ./meryl-configure.sh \
+    > ./meryl-configure.err 2>&1
+
+-- Finished on Mon Apr 10 16:27:07 2023 (one second) with 10743.792 GB free disk space
+----------------------------------------
+--  segments   memory batches
+--  -------- -------- -------
+--        01  1.24 GB       2
+--        02  0.62 GB       2
+--        04  0.31 GB       2
+--
+--  For 31686 reads with 480025224 bases, limit to 4 batches.
+--  Will count kmers using 01 jobs, each using 3 GB and 4 threads.
+--
+-- Finished stage 'merylConfigure', reset canuIteration.
+--
+-- Running jobs.  First attempt out of 2.
+--
+-- Failed to submit compute jobs.  Delay 10 seconds and try again.
+
+CRASH:
+CRASH: canu snapshot v2.2 +0 changes (r10279 af9c6e709ff2d6473cf966702c420b9eb42d9078)
+CRASH: Please panic, this is abnormal.
+CRASH:
+CRASH:   Failed to submit compute jobs.
+CRASH:
+CRASH: Failed at /sw/bioinfo/canu/2.2/rackham/bin/../lib/site_perl/canu/Execution.pm line 1259.
+CRASH: 	canu::Execution::submitOrRunParallelJob('lferriphilum', 'meryl', 'correction/0-mercounts', 'meryl-count', 1) called at /sw/bioinfo/canu/2.2/rackham/bin/../lib/site_perl/canu/Meryl.pm line 847
+CRASH: 	canu::Meryl::merylCountCheck('lferriphilum', 'cor') called at /sw/bioinfo/canu/2.2/snowy/bin/canu line 1076
+CRASH: 
+CRASH: Last 50 lines of the relevant log file (correction/0-mercounts/meryl-count.jobSubmit-01.out):
+CRASH:
+CRASH: sbatch: error: Errors in job submission: 
+CRASH: sbatch: error: ERROR 1: Invalid project. 
+CRASH: sbatch: error: Use the flag -A to specify an active project with allocation on this cluster.
+CRASH: sbatch: error: Batch job submission failed: Unspecified error
+CRASH:
