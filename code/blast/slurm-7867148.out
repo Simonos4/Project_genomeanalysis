@@ -17,15 +17,16 @@ module load bioinfo-tools
 module load blast
 
 # Variable
-IN="ysk_ref.fasta"
 CONTIG="/home/simonos/Project_genomeanalysis/analysis/assembly/lferriphilum.contigs.fasta"
 OUT="/home/simonos/Project_genomeanalysis/analysis/blast/"
 
 # Commands
 
 blastn -subject $CONTIG \
- -query ysk_ref.fasta \
- -outfmt 6 > $OUT/blast_out.txt
+ -query /home/simonos/Project_genomeanalysis/code/blast/L.ferroxidans_C2-3.fasta \
+ -outfmt 6 > $OUT/ferroxidans_blast_out.txt
 
 
 
+USER = simonos
+QOS = normal

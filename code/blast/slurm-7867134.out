@@ -18,14 +18,17 @@ module load blast
 
 # Variable
 IN="ysk_ref.fasta"
-CONTIG="/home/simonos/Project_genomeanalysis/analysis/assembly/lferriphilum.contigs.fasta"
-OUT="/home/simonos/Project_genomeanalysis/analysis/blast/"
+CONTIG="/home/simonos/Genomeanalysis/analysis/assembly/lferriphilum.contigs.fasta"
+OUT="/home/simonos/Genomeanalysis/analysis/blast/"
 
 # Commands
 
 blastn -subject $CONTIG \
- -query ysk_ref.fasta \
+ -query /home/simonos/Genomeanalysis/code/blast/ysk_ref.fasta \
  -outfmt 6 > $OUT/blast_out.txt
 
 
 
+USER = simonos
+QOS = normal
+/var/spool/slurmd/job7867134/slurm_script: line 26: /home/simonos/Genomeanalysis/analysis/blast//blast_out.txt: No such file or directory

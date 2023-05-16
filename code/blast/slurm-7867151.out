@@ -29,3 +29,5 @@ blastn -subject $CONTIG \
 
 
 
+USER = simonos
+QOS = normal
