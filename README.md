@@ -1,1 +1,2 @@
 # Project_genomeanalysis
+Personal access token: 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
