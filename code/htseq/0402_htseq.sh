@@ -18,19 +18,25 @@ module load samtools
 module load htseq
 
 # Variable
-OUT="/home/simonos/Genomeanalysis/analysis/htseq"
-GFF="/home/simonos/Genomeanalysis/analysis/prokka/Leptospirillum.gff"
+OUT="/home/simonos/Project_genomeanalysis/analysis/htseq"
+GFF="/home/simonos/Project_genomeanalysis/analysis/prokka/blast.gff"
 IN="/proj/genomeanalysis2023/nobackup/work/simonos/bwa"
 
 cd $SNIC_TMP
 
+
+# Function
+
+potato() {
+name=$(basename "$f" "_sorted.bam")
+#samtools index ${f}
+( htseq-count -f bam -r pos -s reverse -t CDS -i ID ${f} $GFF > $OUT/${name}_out_htseq.txt )
+}
+
 # Command
-for f in ${IN}/*bam.gz
+for f in ${IN}/*.bam
 do
- name=$(basename "$f" "_sorted.bam.gz")
- gunzip ${f} > out.bam
- samtools view -h out.bam > out.sam 
- ( htseq-count -f bam -r pos -s reverse -t CDS out.sam $GFF > $OUT/${name}_out_htseq.txt ) &
+ potato "$f" &
 done 
 
 wait
