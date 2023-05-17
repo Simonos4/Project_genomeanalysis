@@ -1,0 +1,39 @@
+
+Project_genomeanalysis/
+├── analysis
+│ └── blast
+├── code
+│   ├── GANT.png
+│   ├── Timeline_v1.png
+│   ├── Timeline_v2.png
+│   └── act_ferroxidans_C2-3.png
+└── code
+    ├── DEA
+    │   ├── Deseq_code.R
+    │   └── culture.csv
+    ├── DNA_assembly
+    │   ├── slurm
+    │   ├── 0101_canu.sh
+    │   ├── 0102_quast.sh
+    │   └── 0201_prokka.sh
+    ├── RNA_mapping
+    │   ├── flagstat.sh
+    │   ├── old_versions
+    │   ├── slurm
+    │   └── bwa_v8.sh
+    ├── RNA_trimming
+    │   ├── 0301_trimmomatic.sh
+    │   ├── 0302_fastQC_trimmed.sh
+    │   ├── 0303_fastQC_untrimmed.sh
+    │   └── slurm
+    ├── blast
+    │   ├── 0501_ysk_blast.sh
+    │   ├── 0501_ferroxi_blast.sh
+    │   ├── L.ferroxidans_C2-3.fasta
+    │   ├── ysk_ref.fasta
+    │   └── slurm
+    └── htseq
+        ├── 0402_htseq.sh
+        └── slurm
+
+
